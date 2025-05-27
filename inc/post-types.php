@@ -2171,8 +2171,8 @@ function cptui_update_post_type( $data = [] ) {
 		'rewrite'               => disp_boolean( $data['cpt_custom_post_type']['rewrite'] ),
 		'rewrite_slug'          => $rewrite_slug,
 		'rewrite_withfront'     => disp_boolean( $data['cpt_custom_post_type']['rewrite_withfront'] ),
-		'permastruct' => isset( $cpt['permastruct'] )
-			? sanitize_text_field( $cpt['permastruct'] )
+		'permastruct' => isset( $data['cpt_custom_post_type']['permastruct'] )
+			? wp_strip_all_tags( wp_unslash( $data['cpt_custom_post_type']['permastruct'] ) )
 			: '',
 		'query_var'             => disp_boolean( $data['cpt_custom_post_type']['query_var'] ),
 		'query_var_slug'        => $query_var_slug,

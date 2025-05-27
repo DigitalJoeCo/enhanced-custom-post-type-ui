@@ -21,12 +21,17 @@
     "sort-order": true,
     "platform": {
       "php": "7.4"
+    },
+    "allow-plugins": {
+      "composer/installers": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "composer/installers": "^1.11.0"
+    "composer/installers": "^1.11.0",
+    "johnbillion/extended-cpts": "^5.0"
   },
   "require-dev": {
     "brain/monkey": "^2.0",

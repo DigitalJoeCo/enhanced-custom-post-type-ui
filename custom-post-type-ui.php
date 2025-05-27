@@ -1,6 +1,6 @@
 <?php
 /**
- * Custom Post Type UI.
+ * Enhanced Custom Post Type UI.
  *
  * For all your post type and taxonomy needs.
  *
@@ -11,8 +11,10 @@
  * @license GPL-2.0+
  */
 
+use Args\register_post_type;
+
 /**
- * Plugin Name: Custom Post Type UI
+ * Plugin Name: Enhanced Custom Post Type UI
  * Plugin URI: https://github.com/WebDevStudios/custom-post-type-ui/
  * Description: Admin UI panel for registering custom post types and taxonomies
  * Author: WebDevStudios
@@ -36,6 +38,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'CPT_VERSION', '1.17.3' ); // Left for legacy purposes.
 define( 'CPTUI_VERSION', '1.17.3' );
 define( 'CPTUI_WP_VERSION', get_bloginfo( 'version' ) );
+
+/**
+ * Load Composer Dependencies.
+ **/
+if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	require_once __DIR__ . '/vendor/autoload.php';
+} elseif ( file_exists( dirname(ABSPATH) . '/vendor/autoload.php' ) ) {
+	require_once dirname(ABSPATH) . '/vendor/autoload.php';
+} else {
+	throw new \Exception( esc_html__(
+		'Composer autoload file not found. Please run composer install.',
+		'custom-post-type-ui'
+	) );
+}
 
 /**
  * Load our Admin UI class that powers our form inputs.
@@ -442,6 +458,10 @@ function cptui_register_single_post_type( array $post_type = [] ) {
 		}
 	}
 
+	if ( ! empty( $post_type['permastruct'] ) ) {
+		$rewrite['permastruct'] = $post_type['permastruct'];
+	}
+
 	$menu_icon            = ! empty( $post_type['menu_icon'] ) ? $post_type['menu_icon'] : null;
 	$register_meta_box_cb = ! empty( $post_type['register_meta_box_cb'] ) ? $post_type['register_meta_box_cb'] : null;
 
@@ -556,7 +576,11 @@ function cptui_register_single_post_type( array $post_type = [] ) {
 	 */
 	$args = apply_filters( 'cptui_pre_register_post_type', $args, $post_type['name'], $post_type );
 
-	return register_post_type( $post_type['name'], $args );
+	return call_user_func(
+		function_exists('register_extended_post_type') ? 'register_extended_post_type' : 'register_post_type',
+		$post_type['name'],
+		$args
+	);
 }
 
 /**
@@ -801,7 +825,12 @@ function cptui_register_single_taxonomy( array $taxonomy = [] ) {
 	 */
 	$args = apply_filters( 'cptui_pre_register_taxonomy', $args, $taxonomy['name'], $taxonomy, $object_type );
 
-	return register_taxonomy( $taxonomy['name'], $object_type, $args );
+	return call_user_func(
+		function_exists('register_extended_taxonomy') ? 'register_extended_taxonomy' : 'register_taxonomy',
+		$taxonomy['name'],
+		$object_type,
+		$args
+	);
 }
 
 /**

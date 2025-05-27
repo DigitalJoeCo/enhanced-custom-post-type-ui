@@ -1297,7 +1297,17 @@ function cptui_manage_post_types() {
 									'aftertext'  => esc_html__( '(default: true) Whether or not WordPress should use rewrites for this post type.', 'custom-post-type-ui' ),
 									'selections' => $select, // phpcs:ignore.
 								]
-							);
+									);
+
+							if (function_exists('register_extended_post_type')) {
+								echo $ui->get_text_input( [
+									'namearray' => 'cpt_custom_post_type',
+									'name'      => 'permastruct',
+									'textvalue' => isset( $current['permastruct'] ) ? esc_attr( $current['permastruct'] ) : '',
+									'labeltext' => __( 'Permalink structure', 'custom-post-type-ui' ),
+									'helptext'  => __( 'Uses Extended CPTs tokens e.g. /foo/%custom_tax%/%article%', 'custom-post-type-ui' ),
+								] );
+							}
 
 							echo $ui->get_text_input( // phpcs:ignore.
 								[
@@ -2161,6 +2171,9 @@ function cptui_update_post_type( $data = [] ) {
 		'rewrite'               => disp_boolean( $data['cpt_custom_post_type']['rewrite'] ),
 		'rewrite_slug'          => $rewrite_slug,
 		'rewrite_withfront'     => disp_boolean( $data['cpt_custom_post_type']['rewrite_withfront'] ),
+		'permastruct' => isset( $post_data['permastruct'] )
+			? sanitize_text_field( $post_data['permastruct'] )
+			: '',
 		'query_var'             => disp_boolean( $data['cpt_custom_post_type']['query_var'] ),
 		'query_var_slug'        => $query_var_slug,
 		'menu_position'         => $menu_position,

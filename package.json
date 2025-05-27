@@ -1,7 +1,7 @@
 {
-  "name": "custom-post-type-ui",
+  "name": "enhanced-custom-post-type-ui",
   "version": "1.17.1",
-  "description": "Custom Post Type UI",
+  "description": "Enhanced Custom Post Type UI",
   "main": "index.js",
   "directories": {
     "tests": "tests"
@@ -18,10 +18,10 @@
     "lint:php": "./vendor/bin/phpcs --standard=./.phpcs.xml.dist --extensions=php ./ --ignore='./build/*,./node_modules/*,./vendor/*'",
     "packages-update": "wp-scripts packages-update",
     "styles": "run-s styles:compile styles:compress",
-    "styles:compile": "node-sass src/scss/cptui-styles.scss -o build/ --source-map true",
-    "styles:compress": "node-sass src/scss/cptui-styles.scss build/cptui-styles.min.css -o build/ --output-style compressed",
+    "styles:compile": "sass --embed-source-map src/scss/cptui-styles.scss build/cptui-styles.css",
+    "styles:compress": "sass --style=compressed src/scss/cptui-styles.scss build/cpui-styles.min.css",
     "uglify": "uglifyjs build/cptui.js -m -c --source-map -o build/cptui.min.js && uglifyjs build/dashiconsPicker.js -m -c --source-map -o build/dashiconsPicker.min.js",
-    "create:release": "mkdirp release-build/custom-post-type-ui && cp -R build classes external images inc readme.txt LICENSE custom-post-type-ui.php wpml-config.xml release-build/custom-post-type-ui"
+    "create:release": "mkdir -p release-build/custom-post-type-ui && cp -R build classes external images inc readme.txt LICENSE custom-post-type-ui.php wpml-config.xml release-build/custom-post-type-ui"
   },
   "devDependencies": {
     "@wordpress/eslint-plugin": "^17.1.0",
@@ -32,11 +32,11 @@
     "cssnano": "^6",
     "ignore-emit-webpack-plugin": "^2.0.6",
     "mini-css-extract-plugin": "^2.9.0",
-    "node-sass": "^9",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.12",
     "postcss-loader": "^7",
     "postcss-safe-parser": "^7",
+    "sass": "^1.89.0",
     "sass-loader": "^13",
     "style-loader": "^3.3.1",
     "uglify-js": "^3.15.4",

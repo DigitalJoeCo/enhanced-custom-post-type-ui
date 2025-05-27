@@ -45,9 +45,10 @@ define( 'CPTUI_WP_VERSION', get_bloginfo( 'version' ) );
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
 } else {
-	add_action('admin_notices', function() {
-		echo '<div class="notice notice-error"><p>' . esc_html__( 'Custom Post Type UI requires Composer dependencies to be installed. Please run `composer install` in the plugin directory.', 'custom-post-type-ui' ) . '</p></div>';
-	});
+	add_action('admin_notices', fn () => printf(
+		'<div class="notice notice-error"><p>%s</p></div>',
+		esc_html__( 'Custom Post Type UI requires Composer dependencies to be installed. Please run `composer install` in the plugin directory.', 'custom-post-type-ui' )
+	));
 	return; // bail if dependencies are not found.
 }
 

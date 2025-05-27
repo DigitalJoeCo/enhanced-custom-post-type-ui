@@ -11,7 +11,8 @@
     "dev": "wp-scripts start",
     "watch": "wp-scripts start --config webpack.config.js",
     "buildjs": "wp-scripts build --config webpack.config.js",
-    "build": "run-s buildjs uglify styles",
+		"buildphp": "composer install --no-dev --optimize-autoloader",
+    "build": "run-s buildjs buildphp uglify styles",
     "build:release": "run-s build create:release",
     "lint:css": "wp-scripts lint-style 'src/scss/*.scss'",
     "lint:js": "wp-scripts lint-js src/js/**",
@@ -21,7 +22,7 @@
     "styles:compile": "sass --embed-source-map src/scss/cptui-styles.scss build/cptui-styles.css",
     "styles:compress": "sass --style=compressed src/scss/cptui-styles.scss build/cptui-styles.min.css",
     "uglify": "uglifyjs build/cptui.js -m -c --source-map -o build/cptui.min.js && uglifyjs build/dashiconsPicker.js -m -c --source-map -o build/dashiconsPicker.min.js",
-    "create:release": "mkdir -p release-build/custom-post-type-ui && cp -R build classes external images inc readme.txt LICENSE custom-post-type-ui.php wpml-config.xml release-build/custom-post-type-ui"
+    "create:release": "mkdir -p release-build/custom-post-type-ui && cp -R build classes external images inc vendor readme.txt LICENSE custom-post-type-ui.php wpml-config.xml release-build/custom-post-type-ui"
   },
   "devDependencies": {
     "@wordpress/eslint-plugin": "^17.1.0",

@@ -44,13 +44,11 @@ define( 'CPTUI_WP_VERSION', get_bloginfo( 'version' ) );
  **/
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
-} elseif ( file_exists( dirname(ABSPATH) . '/vendor/autoload.php' ) ) {
-	require_once dirname(ABSPATH) . '/vendor/autoload.php';
 } else {
-	throw new \Exception( esc_html__(
-		'Composer autoload file not found. Please run composer install.',
-		'custom-post-type-ui'
-	) );
+	add_action('admin_notices', function() {
+		echo '<div class="notice notice-error"><p>' . esc_html__( 'Custom Post Type UI requires Composer dependencies to be installed. Please run `composer install` in the plugin directory.', 'custom-post-type-ui' ) . '</p></div>';
+	});
+	return; // bail if dependencies are not found.
 }
 
 /**

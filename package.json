@@ -19,7 +19,7 @@
     "packages-update": "wp-scripts packages-update",
     "styles": "run-s styles:compile styles:compress",
     "styles:compile": "sass --embed-source-map src/scss/cptui-styles.scss build/cptui-styles.css",
-    "styles:compress": "sass --style=compressed src/scss/cptui-styles.scss build/cpui-styles.min.css",
+    "styles:compress": "sass --style=compressed src/scss/cptui-styles.scss build/cptui-styles.min.css",
     "uglify": "uglifyjs build/cptui.js -m -c --source-map -o build/cptui.min.js && uglifyjs build/dashiconsPicker.js -m -c --source-map -o build/dashiconsPicker.min.js",
     "create:release": "mkdir -p release-build/custom-post-type-ui && cp -R build classes external images inc readme.txt LICENSE custom-post-type-ui.php wpml-config.xml release-build/custom-post-type-ui"
   },
